@@ -107,7 +107,7 @@ fn solution_part2(lines: Vec<&String>) -> u64 {
     })
 }
 
-// Link: https://adventofcode.com/2023/day/1
+// Link: https://adventofcode.com/2023/day/2
 fn main() {
     let filepath = match get_input_file_path_from_args() {
         Ok(path) => path,
