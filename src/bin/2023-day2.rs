@@ -10,7 +10,7 @@ fn read_lines_as_vec(filepath: String) -> Result<Vec<String>, io::Error> {
 }
 
 fn get_game_number(line: &str) -> u64 {
-    let number_details: Vec<&str> = line.split(" ").collect();
+    let number_details: Vec<&str> = line.split(' ').collect();
     let parsed_number = number_details[1].parse::<u64>();
     match parsed_number {
         Ok(value) => value,
@@ -22,10 +22,10 @@ fn get_game_number(line: &str) -> u64 {
 }
 
 fn parse_colour_details(game_detail_str: &str) -> Option<(&str, u64)> {
-    let mut details_itr = game_detail_str.split(" ").into_iter();
+    let mut details_itr = game_detail_str.split(' ');
     let number = details_itr.next().unwrap_or("");
     let colour = details_itr.next().unwrap_or("");
-    if number == "" || colour == "" {
+    if number.is_empty() || colour.is_empty() {
         return None;
     }
     match number.parse::<u64>() {
@@ -53,10 +53,10 @@ fn solution_part1(lines: Vec<&String>) -> u64 {
         );
         res + match line_split.next() {
             Some(game_data) => {
-                let success = game_data.split("; ").into_iter().all(|round| {
+                let success = game_data.split("; ").all(|round| {
                     let mut round_map = get_colour_map(0, 0, 0);
 
-                    round.split(", ").into_iter().for_each(|value| {
+                    round.split(", ").for_each(|value| {
                         if let Some((colour, total)) = parse_colour_details(value) {
                             round_map.insert(colour, round_map.get(colour).unwrap_or(&0) + total);
                         }
@@ -81,8 +81,8 @@ fn solution_part2(lines: Vec<&String>) -> u64 {
         res + match line_split {
             Some(game_data) => {
                 let mut max_configurations = get_colour_map(0, 0, 0);
-                game_data.split("; ").into_iter().for_each(|round| {
-                    round.split(", ").into_iter().for_each(|value| {
+                game_data.split("; ").for_each(|round| {
+                    round.split(", ").for_each(|value| {
                         if let Some((colour, total)) = parse_colour_details(value) {
                             if max_configurations.get(colour).unwrap_or(&0) < &total {
                                 max_configurations.insert(colour, total);
